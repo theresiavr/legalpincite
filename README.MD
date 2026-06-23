@@ -47,7 +47,7 @@ We also provide the raw citation data (prior to temporal-based splitting and fil
 
 - `example.ipynb`: end-to-end examples for loading LegalPincite, running retrieval, reranking results with cross-encoder (MonoT5) and bi-encoder (LegalBERT).
 - `raw_citation_data/all_citation.json`: all unparsed citation data (raw citation strings) from CJEU judgments available in English, with date of documents from 2021--2025; keys are the citing CELEX number and values are the cited CELEX number (not necessarily a CJEU judgment)
-- `raw_citation_data/cj_par2par_citation.csv`: parsed CJEU paragraph-to-paragraph citations with citing and cited CELEX/paragraph numbers; only from CJEU judgments available in English with date of documents from 2021--2025
+- `raw_citation_data/cj_par2par_citation.csv`: parsed 41,551 CJEU paragraph-to-paragraph citations (41,547 unique) with citing and cited CELEX/paragraph numbers; only from CJEU judgments available in English with date of documents from 2021--2025;
 - `scraper/get_citation.py`: downloads EUR-Lex HTML page containing "Instruments cited" for CELEX IDs from a search-result CSV.
 - `scraper/extract_all_citation.py`: extracts raw citation strings from saved EUR-Lex HTML pages.
 - `scraper/extract_cj_par_citation.py`: converts raw citation strings and filters into the CJEU paragraph-to-paragraph citation CSV.
