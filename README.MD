@@ -23,6 +23,8 @@ More information about the dataset (e.g., query, corpus, qrel statistics), can b
 - Dataset: <https://huggingface.co/datasets/theresiavr/legalpincite>
 - Paper: TBA
 
+We also provide the raw citation data (prior to temporal-based splitting and filtering to train, dev, and test) in the `raw_citation_data` folder and the code to scrape/extract them from EUR-Lex in the `scraper` folder.
+
 ## Repository Contents
 
 ```text
@@ -30,6 +32,13 @@ More information about the dataset (e.g., query, corpus, qrel statistics), can b
 |-- README.MD
 |-- LICENSE
 |-- example.ipynb
+|-- raw_citation_data/
+|   |-- all_citation.json
+|   `-- cj_par2par_citation.csv
+|-- scraper/
+|   |-- extract_all_citation.py
+|   |-- extract_cj_par_citation.py
+|   `-- get_citation.py
 `-- script/
     |-- retrieval.py
     |-- retrieval_small.sh
@@ -37,6 +46,11 @@ More information about the dataset (e.g., query, corpus, qrel statistics), can b
 ```
 
 - `example.ipynb`: end-to-end examples for loading LegalPincite, running retrieval, reranking results with cross-encoder (MonoT5) and bi-encoder (LegalBERT).
+- `raw_citation_data/all_citation.json`: all unparsed citation data (raw citation strings) from CJEU judgments available in English, with date of documents from 2021--2025; keys are the citing CELEX number and values are the cited CELEX number (not necessarily a CJEU judgment)
+- `raw_citation_data/cj_par2par_citation.csv`: parsed CJEU paragraph-to-paragraph citations with citing and cited CELEX/paragraph numbers; only from CJEU judgments available in English with date of documents from 2021--2025
+- `scraper/get_citation.py`: downloads EUR-Lex HTML page containing "Instruments cited" for CELEX IDs from a search-result CSV.
+- `scraper/extract_all_citation.py`: extracts raw citation strings from saved EUR-Lex HTML pages.
+- `scraper/extract_cj_par_citation.py`: converts raw citation strings and filters into the CJEU paragraph-to-paragraph citation CSV.
 - `script/retrieval.py`: baseline retrieval with TF-IDF, BM25, LMIR, and DPH (results are in the paper).
 - `script/retrieval_small.sh`: small smoke test using five queries for paragraph-to-paragraph retrieval (on the dev split).
 - `script/retrieval.sh`: full baseline runs for dev/test and all supported query-document levels.
@@ -63,6 +77,26 @@ Some notes:
 - PyTerrier requires Java. Before running `script/retrieval.py`, update the `java_home` value in that file to match your Java installation location.
 
 - An internet connection is required because the scripts load CSV files and Terrier indexes from Hugging Face.
+
+## Run Scraper Pipeline
+
+Run the scraper scripts from the repository root. The first step expects a EUR-Lex search-result CSV at `raw/search_result_20260523.csv` with the columns `CELEX number`, `Title`, and `Date of document`.
+
+`scraper/get_citation.py` uses Selenium with Chrome. Chrome installation may be required. If these scraper dependencies are not already installed in your environment, install them first:
+
+```bash
+pip install selenium webdriver-manager
+```
+
+Preferably with a stable internet connection, download the EUR-Lex pages, extract all citation strings, and then extract the CJEU paragraph-to-paragraph citations:
+
+```bash
+python scraper/get_citation.py
+python scraper/extract_all_citation.py
+python scraper/extract_cj_par_citation.py
+```
+
+The scraper pipeline writes saved HTML pages to `citation_page_source/`, logs to `log/`, raw citation strings to `raw_citation_data/all_citation.json`, and parsed CJEU paragraph-to-paragraph citations to `raw_citation_data/cj_par2par_citation.csv`.
 
 ## Run Retrieval Baselines
 
@@ -120,11 +154,11 @@ python script/retrieval.py -s dev -q par -d par -n 5 -e _small
 
 ## License
 
-The code in this repository is released under the MIT License. The LegalPincite dataset on Hugging Face is released under CC BY 4.0.
+The code in this repository is released under the MIT License. The LegalPincite dataset on Hugging Face and the raw citation data in this repository are released under CC BY 4.0.
 
 ## Citation
 
-If you use LegalPincite, please cite the dataset DOI, the accompanying paper (TBA), and the papers of the original datasets.
+If you use LegalPincite, please cite the dataset DOI, the accompanying paper (TBA), and the papers of the original datasets. If you use the raw citation data or the the code in the `scraper` folder, please cite the accompanying dataset paper.
 
 ### Dataset Citation
 
