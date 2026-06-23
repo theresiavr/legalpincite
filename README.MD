@@ -78,26 +78,6 @@ Some notes:
 
 - An internet connection is required because the scripts load CSV files and Terrier indexes from Hugging Face.
 
-## Run Scraper Pipeline
-
-Run the scraper scripts from the repository root. The first step expects a EUR-Lex search-result CSV at `raw/search_result_20260523.csv` with the columns `CELEX number`, `Title`, and `Date of document`.
-
-`scraper/get_citation.py` uses Selenium with Chrome. Chrome installation may be required. If these scraper dependencies are not already installed in your environment, install them first:
-
-```bash
-pip install selenium webdriver-manager
-```
-
-Preferably with a stable internet connection, download the EUR-Lex pages, extract all citation strings, and then extract the CJEU paragraph-to-paragraph citations:
-
-```bash
-python scraper/get_citation.py
-python scraper/extract_all_citation.py
-python scraper/extract_cj_par_citation.py
-```
-
-The scraper pipeline writes saved HTML pages to `citation_page_source/`, logs to `log/`, raw citation strings to `raw_citation_data/all_citation.json`, and parsed CJEU paragraph-to-paragraph citations to `raw_citation_data/cj_par2par_citation.csv`.
-
 ## Run Retrieval Baselines
 
 First activate the environment:
@@ -151,6 +131,27 @@ python script/retrieval.py -s dev -q par -d par -n 5 -e _small
 - `-d`, `--doc`: `par` or `case` (note that `par` here should not be used with `case` on query)
 - `-n`, `--n_sample`: number of queries to run; `-1` uses all queries
 - `-e`, `--experiment_name_suffix`: suffix added to the output experiment name
+
+## Run Scraper Pipeline
+
+We provide the code that we used to extract citations from EUR-Lex. This step is not necessary for running the retrieval baselines above.
+The first step expects a EUR-Lex search-result CSV at `raw/search_result_20260523.csv` with the columns `CELEX number`, `Title`, and `Date of document`.
+
+`scraper/get_citation.py` uses Selenium with Chrome. Chrome installation may be required. If these scraper dependencies are not already installed in your environment, install them first:
+
+```bash
+pip install selenium webdriver-manager
+```
+
+Preferably with a stable internet connection, download the EUR-Lex pages, extract all citation strings, and then extract the CJEU paragraph-to-paragraph citations:
+
+```bash
+python scraper/get_citation.py
+python scraper/extract_all_citation.py
+python scraper/extract_cj_par_citation.py
+```
+
+The scraper pipeline writes saved HTML pages to `citation_page_source/`, logs to `log/`, raw citation strings to `raw_citation_data/all_citation.json`, and parsed CJEU paragraph-to-paragraph citations to `raw_citation_data/cj_par2par_citation.csv`.
 
 ## License
 
