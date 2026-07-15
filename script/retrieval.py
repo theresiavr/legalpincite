@@ -48,7 +48,7 @@ def main(exp_name, split, query, doc):
 
     index = pt.Artifact.from_hf(f'theresiavr/legalpincite_doc_{split}_{doc}.terrier')
 
-    # if you have download the index locally, use this line instead: 
+    # if you have downloaded the index locally, use this line instead: 
     # index = pt.terrier.TerrierIndex(f"{path}/doc_{split}_{doc}.terrier/")
 
     tfidf = index.tf_idf()
