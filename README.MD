@@ -14,7 +14,7 @@ This repository contains code that provides both simple examples and full experi
 - loading the dataset
 - loading the provided PyTerrier indexes (or re-creating them)
 - performing simple retrieval
-- running sparse retrieval baselines (code for experiments presented in the paper)
+- running sparse retrieval baselines, with and without hyperparameter tuning
 - applying semantic reranking with MonoT5 and LegalBERT (additional examples not included in the paper)
 - retrieval/reranking evaluation
 
@@ -39,10 +39,13 @@ We also provide the raw citation data (prior to temporal-based splitting and fil
 |   |-- extract_all_citation.py
 |   |-- extract_cj_par_citation.py
 |   `-- get_citation.py
-`-- script/
+|-- script/
     |-- retrieval.py
     |-- retrieval_small.sh
-    `-- retrieval.sh
+    |-- retrieval.sh
+    |-- tuning.py
+    `-- tuning.sh
+`-- tuning/
 ```
 
 - `example.ipynb`: end-to-end examples for loading LegalPincite, running retrieval, reranking results with cross-encoder (MonoT5) and bi-encoder (LegalBERT).
@@ -51,9 +54,12 @@ We also provide the raw citation data (prior to temporal-based splitting and fil
 - `scraper/get_citation.py`: downloads EUR-Lex HTML page containing "Instruments cited" for CELEX IDs from a search-result CSV.
 - `scraper/extract_all_citation.py`: extracts raw citation strings from saved EUR-Lex HTML pages.
 - `scraper/extract_cj_par_citation.py`: converts raw citation strings and filters into the CJEU paragraph-to-paragraph citation CSV.
-- `script/retrieval.py`: baseline retrieval with TF-IDF, BM25, LMIR, and DPH (results are in the paper).
+- `script/retrieval.py`: baseline retrieval with TF-IDF, BM25, LMIR, and DPH.
 - `script/retrieval_small.sh`: small smoke test using five queries for paragraph-to-paragraph retrieval (on the dev split).
 - `script/retrieval.sh`: full baseline runs for dev/test and all supported query-document levels.
+- `script/tuning.py`: tunes hyperparameters of baseline retrievers with grid search on the dev split and evaluates the best configurations on test split; contains hyperparameter search space.
+- `script/tuning.sh`: performs tuning and testing for all supported query-document levels.
+- `tuning/`: reports hyperparameter configurations with the best NDCG@10 on dev split.
 
 ## Setup
 
@@ -78,7 +84,7 @@ Some notes:
 
 - An internet connection is required because the scripts load CSV files and Terrier indexes from Hugging Face.
 
-## Run Retrieval Baselines
+## Run Retrieval Baselines (No Tuning)
 
 First activate the environment:
 
@@ -131,6 +137,14 @@ python script/retrieval.py -s dev -q par -d par -n 5 -e _small
 - `-d`, `--doc`: `par` or `case` (note that `par` here should not be used with `case` on query)
 - `-n`, `--n_sample`: number of queries to run; `-1` uses all queries
 - `-e`, `--experiment_name_suffix`: suffix added to the output experiment name
+
+## Run Retrieval Baselines (With Tuning)
+
+```bash
+bash script/tuning.sh
+```
+
+This will automatically tune the hyperparameters of each baseline retriever on the dev split for all valid query-document level pairs, save the best configuration, and use it for testing.
 
 ## Run Scraper Pipeline
 
