@@ -21,7 +21,7 @@ This repository contains code that provides both simple examples and full experi
 More information about the dataset (e.g., query, corpus, qrel statistics), can be found on the HuggingFace Hub dataset page and in the accompanying dataset paper:
 
 - Dataset: <https://huggingface.co/datasets/theresiavr/legalpincite>
-- Paper: TBA
+- Paper: <https://arxiv.org/abs/2608.03756>
 
 We also provide the raw citation data (prior to temporal-based splitting and filtering to train, dev, and test) in the `raw_citation_data` folder and the code to scrape/extract them from EUR-Lex in the `scraper` folder.
 
@@ -173,7 +173,7 @@ The code in this repository is released under the MIT License. The LegalPincite 
 
 ## Citation
 
-If you use LegalPincite, please cite the dataset DOI, the accompanying paper (TBA), and the papers of the original datasets. If you use the raw citation data or the the code in the `scraper` folder, please cite the accompanying dataset paper.
+If you use LegalPincite, please cite the dataset DOI, the accompanying paper, and the papers of the original datasets. If you use the raw citation data or the the code in the `scraper` folder, please cite the accompanying dataset paper.
 
 ### Dataset Citation
 
@@ -193,7 +193,17 @@ If you use LegalPincite, please cite the dataset DOI, the accompanying paper (TB
 
 #### Accompanying dataset paper
 
-TBA
+```bibtex
+@misc{rampisela2026legalpincite,
+      title={LegalPincite: Multi-level Legal Information Retrieval Dataset}, 
+      author={Theresia Veronika Rampisela and Henrik Palmer Olsen and Giovanni Colavizza},
+      year={2026},
+      eprint={2608.03756},
+      archivePrefix={arXiv},
+      primaryClass={cs.IR},
+      url={https://arxiv.org/abs/2608.03756}, 
+}
+```
 
 #### Papers of the original datasets
 
