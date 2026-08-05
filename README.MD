@@ -1,6 +1,10 @@
 
 # 👩‍⚖️ LegalPincite - Dataset for Multi-level Legal Retrieval
 
+<p align="center">
+<img src=legalpincite_overview.png alt="LegalPincite Overview. Credits: pin icon created by alfanz - Flaticon; Lawyer icon created by Magnific - Flaticon"/>
+</p>
+
 LegalPincite is a large-scale legal information retrieval dataset for citation-oriented retrieval based on Court of Justice of the European Union (CJEU) judgments from [EUR-Lex](https://eur-lex.europa.eu/homepage.html). It supports retrieval at multiple levels of granularity:
 
 | Retrieval setting | Query | Candidate document | Typical task |
