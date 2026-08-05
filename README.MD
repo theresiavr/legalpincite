@@ -193,6 +193,8 @@ If you use LegalPincite, please cite the dataset DOI, the accompanying paper, an
 
 #### Accompanying dataset paper
 
+- Theresia Veronika Rampisela, Henrik Palmer Olsen, and Giovanni Colavizza. 2026. LegalPincite: Multi-level Legal Information Retrieval Dataset. *Preprint*. <https://arxiv.org/abs/2608.03756>
+
 ```bibtex
 @misc{rampisela2026legalpincite,
       title={LegalPincite: Multi-level Legal Information Retrieval Dataset}, 
